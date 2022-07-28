@@ -10,12 +10,13 @@ import '../model/comic.dart';
 
 abstract class IProjectNetworkManager {
   Future<MarvelCharacters?> fetchCharacter();
+  Future<MarvelComic?> fetchComic(int characterComicId);
 }
 
 class ProjectNetworkManager implements IProjectNetworkManager {
   final Dio dio;
   MarvelCharacters? characters;
-  List<MarvelComic> comics = [];
+  MarvelComic? comics;
   int limit = 30, offset = 0;
 
   ProjectNetworkManager() : dio = Dio(BaseOptions(baseUrl: AppConstants.url));
@@ -26,6 +27,16 @@ class ProjectNetworkManager implements IProjectNetworkManager {
     print(
         'KEY  ${"${AppConstants.url}$url?limit=$limit&offset=$offset&apikey=${AppConstants.public_key}&hash=$key&ts=$ts"}');
     return "${AppConstants.url}$url?limit=$limit&offset=$offset&apikey=${AppConstants.public_key}&hash=$key&ts=$ts";
+  }
+
+  characterComicUrl(String urlCharacters, String urlComic, int characterId) {
+    const int startYear = 2015;
+
+    final tsComic = DateTime.now().millisecondsSinceEpoch;
+    final keyComic = crypto('$tsComic${AppConstants.private_key}${AppConstants.public_key}');
+    print(
+        'KEY character comic url  ${AppConstants.url}$urlCharacters/$characterId/$urlComic?startYear=$startYear&apikey=${AppConstants.public_key}&hash=$keyComic&ts=$tsComic');
+    return "${AppConstants.url}$urlCharacters/$characterId/$urlComic?startYear=$startYear&apikey=${AppConstants.public_key}&hash=$keyComic&ts=$tsComic";
   }
 
   @override
@@ -47,7 +58,18 @@ class ProjectNetworkManager implements IProjectNetworkManager {
   }
 
   @override
-  Future<MarvelCharacters?> fetchCharacterComics(int characterId) async {
+  Future<MarvelComic?> fetchComic(int characterComicId) async {
+    try {
+      var response = await dio
+          .get(characterComicUrl(_PostServicePath.characters.name, _PostServicePath.comics.name, characterComicId));
+      if (response.statusCode == 200) {
+        comics = MarvelComic.fromJson(response.data);
+        print(response.data);
+        return comics;
+      }
+    } on DioError catch (err) {
+      debugPrint("error ${err.response?.statusCode}");
+    }
     return null;
   }
 }

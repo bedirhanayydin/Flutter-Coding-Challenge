@@ -4,6 +4,8 @@ import 'package:flutter_coding_challenge/service/project_network_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'detail_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -14,7 +16,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final IProjectNetworkManager _projectService;
   bool _isLoading = false;
-  int page = 0;
   final RefreshController controller = RefreshController(initialRefresh: false);
   List<Results> characters = [];
 
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
           bottomLeft: Radius.circular(50),
         ),
       ),
-      backgroundColor: Theme.of(context).errorColor,
+      backgroundColor: Theme.of(context).primaryColor,
       centerTitle: true,
       title: Text(
         "Marvel Characters",
@@ -147,6 +148,13 @@ class _PostCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         print(_model!.id);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DetailPage(
+                    characterComicId: _model!.id,
+                  )),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
