@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_coding_challenge/model/characters.dart';
 import 'package:flutter_coding_challenge/service/project_network_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -18,6 +21,9 @@ class _HomePageState extends State<HomePage> {
   bool _isLoading = false;
   final RefreshController controller = RefreshController(initialRefresh: false);
   List<Results> characters = [];
+  final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  bool _isFabVisible = false;
 
   void _onRefresh() async {
     // monitor network fetch
@@ -67,26 +73,61 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar(context),
-      body: characters.isEmpty
-          ? loadingShimmerEffect()
-          : SmartRefresher(
-              enablePullDown: false,
-              enablePullUp: true,
-              controller: controller,
-              onRefresh: _onRefresh,
-              onLoading: _onLoading,
-              child: character()),
+      floatingActionButton: Visibility(
+        visible: _isFabVisible,
+        child: FloatingActionButton(
+          onPressed: () {
+            if (_scrollController.hasClients) {
+              final position = _scrollController.position.minScrollExtent;
+              _scrollController.animateTo(
+                position,
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeOut,
+              );
+            }
+          },
+          isExtended: true,
+          tooltip: "Scroll to Bottom",
+          child: const Icon(Icons.arrow_upward_sharp),
+        ),
+      ),
+      body: NotificationListener<UserScrollNotification>(
+        onNotification: (notification) {
+          if (notification.direction == ScrollDirection.forward) {
+            setState(() {
+              _isFabVisible = true;
+            });
+          } else if (notification.direction == ScrollDirection.reverse) {
+            setState(() {
+              _isFabVisible = false;
+            });
+          }
+          return true;
+        },
+        child: characters.isEmpty
+            ? loadingShimmerEffect()
+            : SmartRefresher(
+                enablePullDown: false,
+                enablePullUp: true,
+                controller: controller,
+                onRefresh: _onRefresh,
+                onLoading: _onLoading,
+                child: character()),
+      ),
     );
   }
 
   GridView character() {
     return GridView.builder(
+        controller: _scrollController,
+        shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
+          mainAxisSpacing: 10,
         ),
         itemCount: characters.length,
         itemBuilder: ((context, index) {
-          print(characters.length);
+          log('${characters.length}');
           return _PostCard(
             model: characters[index],
           );
@@ -177,7 +218,7 @@ class _PostCard extends StatelessWidget {
               '${_model?.thumbnail?.path}.${_model?.thumbnail?.extension}',
               fit: BoxFit.fill,
               width: 150,
-              height: 100,
+              height: 120,
             ),
             const SizedBox(height: 10),
             Text(

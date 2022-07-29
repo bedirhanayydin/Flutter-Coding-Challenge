@@ -10,17 +10,17 @@ import 'package:intl/intl.dart';
 import '../model/characters.dart';
 
 abstract class IProjectNetworkManager {
+  final Dio dio;
+  IProjectNetworkManager() : dio = Dio(BaseOptions(baseUrl: AppConstants.url));
+
   Future<MarvelCharacters?> fetchCharacter();
   Future<MarvelComic?> fetchComic(int characterComicId);
 }
 
-class ProjectNetworkManager implements IProjectNetworkManager {
-  final Dio dio;
+class ProjectNetworkManager extends IProjectNetworkManager {
   MarvelCharacters? characters;
   MarvelComic? comics;
   int limit = 30, offset = 0;
-
-  ProjectNetworkManager() : dio = Dio(BaseOptions(baseUrl: AppConstants.url));
 
   characterUrl(String url) {
     final ts = DateTime.now().millisecondsSinceEpoch;

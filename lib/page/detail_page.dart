@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../model/marvelComic.dart';
 import '../service/project_network_manager.dart';
@@ -53,31 +54,54 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(widget.characterName ?? 'Character'),
+          title: Text(
+            'Character: ${widget.characterName}',
+            style: const TextStyle(fontSize: 17),
+          ),
           backgroundColor: Colors.red,
         ),
         body: charactersComic.isEmpty
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? const SpinKitWave(
+                color: Colors.red,
               )
             : ListView.builder(
                 itemCount: charactersComic.length,
                 itemBuilder: (BuildContext contex, int index) {
                   log('${charactersComic.length}');
                   log('KARAKTERİN ÇİZGİ ROMANLARI ${charactersComic[index].title}');
-                  return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    Text(
-                      charactersComic[index].title!,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  return Card(
+                    color: Colors.blue,
+                    shadowColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                    Image.network(
-                      '${charactersComic[index].thumbnail!.path}.${charactersComic[index].thumbnail!.extension}',
-                      fit: BoxFit.fill,
-                      width: 200,
-                      height: 200,
-                    ),
-                    Text(charactersComic[index].description ?? 'Açıklama Yok', style: const TextStyle(fontSize: 15)),
-                  ]);
+                    elevation: 30,
+                    child: Column(children: [
+                      Text(
+                        charactersComic[index].title!,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Image.network(
+                        '${charactersComic[index].thumbnail!.path}.${charactersComic[index].thumbnail!.extension}',
+                        fit: BoxFit.fill,
+                        width: 200,
+                        height: 200,
+                      ),
+                      Text(
+                        charactersComic[index].description ?? 'Not Description',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ]),
+                  );
                 }));
   }
 }

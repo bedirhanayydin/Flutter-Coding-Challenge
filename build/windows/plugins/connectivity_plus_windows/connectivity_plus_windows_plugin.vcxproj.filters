@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Lenovo\Documents\Flutter\flutter_coding_challenge\windows\flutter\ephemeral\.plugin_symlinks\connectivity_plus_windows\windows\connectivity_plus_windows_plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Lenovo\Documents\Flutter\flutter_coding_challenge\windows\flutter\ephemeral\.plugin_symlinks\connectivity_plus_windows\windows\network_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Lenovo\Documents\Flutter\flutter_coding_challenge\windows\flutter\ephemeral\.plugin_symlinks\connectivity_plus_windows\windows\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{F5C3E4F2-9684-3B50-83A9-794876B4E7A9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
