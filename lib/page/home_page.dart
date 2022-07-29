@@ -153,6 +153,7 @@ class _PostCard extends StatelessWidget {
           MaterialPageRoute(
               builder: (context) => DetailPage(
                     characterComicId: _model!.id,
+                    characterName: _model!.name,
                   )),
         );
       },

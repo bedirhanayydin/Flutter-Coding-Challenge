@@ -2,12 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import '../model/comic.dart';
+import '../model/marvelComic.dart';
 import '../service/project_network_manager.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key, this.characterComicId}) : super(key: key);
+  DetailPage({Key? key, this.characterComicId, this.characterName}) : super(key: key);
   final int? characterComicId;
+  String? characterName;
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
@@ -15,8 +16,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   late final IProjectNetworkManager _projectDetailService;
   bool _isLoading = false;
-  List<MarvelComic> charactersComic = [];
-
+  List<Results> charactersComic = [];
   @override
   void initState() {
     super.initState();
@@ -37,9 +37,13 @@ class _DetailPageState extends State<DetailPage> {
     MarvelComic? comicItems;
 
     _changeLoading();
+
     comicItems = await _projectDetailService.fetchComic(postId);
+    print(comicItems);
     if (comicItems != null) {
-      charactersComic.addAll(comicItems.data!.results);
+      charactersComic.addAll(comicItems.data!.results!);
+    } else {
+      log('Error');
     }
     _changeLoading();
   }
@@ -47,11 +51,33 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: ListView.builder(
-            itemCount: charactersComic.length,
-            itemBuilder: (BuildContext contex, int index) {
-              return Text('$charactersComic[index]');
-            }));
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(widget.characterName ?? 'Character'),
+          backgroundColor: Colors.red,
+        ),
+        body: charactersComic.isEmpty
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: charactersComic.length,
+                itemBuilder: (BuildContext contex, int index) {
+                  log('${charactersComic.length}');
+                  log('KARAKTERİN ÇİZGİ ROMANLARI ${charactersComic[index].title}');
+                  return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                    Text(
+                      charactersComic[index].title!,
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    Image.network(
+                      '${charactersComic[index].thumbnail!.path}.${charactersComic[index].thumbnail!.extension}',
+                      fit: BoxFit.fill,
+                      width: 200,
+                      height: 200,
+                    ),
+                    Text(charactersComic[index].description ?? 'Açıklama Yok', style: const TextStyle(fontSize: 15)),
+                  ]);
+                }));
   }
 }

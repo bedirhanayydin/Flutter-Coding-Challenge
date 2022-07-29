@@ -4,9 +4,10 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_coding_challenge/constants/app_constants.dart';
+import 'package:flutter_coding_challenge/model/marvelComic.dart';
+import 'package:intl/intl.dart';
 
 import '../model/characters.dart';
-import '../model/comic.dart';
 
 abstract class IProjectNetworkManager {
   Future<MarvelCharacters?> fetchCharacter();
@@ -31,12 +32,17 @@ class ProjectNetworkManager implements IProjectNetworkManager {
 
   characterComicUrl(String urlCharacters, String urlComic, int characterId) {
     const int startYear = 2015;
-
+    int limit = 10;
+    String focDate = '-focDate';
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     final tsComic = DateTime.now().millisecondsSinceEpoch;
     final keyComic = crypto('$tsComic${AppConstants.private_key}${AppConstants.public_key}');
+
     print(
-        'KEY character comic url  ${AppConstants.url}$urlCharacters/$characterId/$urlComic?startYear=$startYear&apikey=${AppConstants.public_key}&hash=$keyComic&ts=$tsComic');
-    return "${AppConstants.url}$urlCharacters/$characterId/$urlComic?startYear=$startYear&apikey=${AppConstants.public_key}&hash=$keyComic&ts=$tsComic";
+        'KEY character comic url  ${AppConstants.url}$urlCharacters/$characterId/$urlComic?dateRange=2015-01-01,$formattedDate&orderBy=$focDate&limit=$limit&apikey=${AppConstants.public_key}&hash=$keyComic&ts=$tsComic');
+
+    return "${AppConstants.url}$urlCharacters/$characterId/$urlComic?dateRange=2015-01-01,$formattedDate&orderBy=$focDate&limit=$limit&apikey=${AppConstants.public_key}&hash=$keyComic&ts=$tsComic";
   }
 
   @override
