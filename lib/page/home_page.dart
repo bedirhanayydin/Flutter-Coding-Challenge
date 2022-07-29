@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
   bool _isLoading = false;
   final RefreshController controller = RefreshController(initialRefresh: false);
   List<Results> characters = [];
-  final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   bool _isFabVisible = false;
 
