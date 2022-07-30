@@ -47,7 +47,6 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> fetchPostItemsAdvance() async {
     MarvelCharacters? items;
-
     _changeLoading();
     items = await _projectService.fetchCharacter();
     if (items != null) {

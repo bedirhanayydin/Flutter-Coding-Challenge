@@ -18,6 +18,7 @@ class _DetailPageState extends State<DetailPage> {
   late final IProjectNetworkManager _projectDetailService;
   bool _isLoading = false;
   List<Results> charactersComic = [];
+
   @override
   void initState() {
     super.initState();
@@ -25,7 +26,6 @@ class _DetailPageState extends State<DetailPage> {
     log('CHARACTER ID ${widget.characterComicId}');
     _projectDetailService = ProjectNetworkManager();
     fetchItemsWithId(widget.characterComicId ?? 0);
-
     setState(() {});
   }
 
@@ -37,9 +37,7 @@ class _DetailPageState extends State<DetailPage> {
 
   Future<void> fetchItemsWithId(int postId) async {
     MarvelComic? comicItems;
-
     _changeLoading();
-
     comicItems = await _projectDetailService.fetchComic(postId);
     print(comicItems);
     if (comicItems != null) {
