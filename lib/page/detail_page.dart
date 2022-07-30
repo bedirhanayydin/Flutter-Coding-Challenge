@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../model/marvelComic.dart';
@@ -21,11 +22,15 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
-    _changeLoading();
-    log('CHARACTER ID ${widget.characterComicId}');
-    _projectDetailService = ProjectNetworkManager();
-    fetchItemsWithId(widget.characterComicId ?? 0);
-    setState(() {});
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _changeLoading();
+      log('CHARACTER ID ${widget.characterComicId}');
+      _projectDetailService = ProjectNetworkManager();
+      fetchItemsWithId(widget.characterComicId ?? 0);
+
+      setState(() {});
+    });
   }
 
   void _changeLoading() {

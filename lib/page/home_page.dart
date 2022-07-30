@@ -59,10 +59,14 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _changeLoading();
-    _projectService = ProjectNetworkManager();
-    fetchPostItemsAdvance();
-    setState(() {});
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _changeLoading();
+      _projectService = ProjectNetworkManager();
+      fetchPostItemsAdvance();
+
+      setState(() {});
+    });
   }
 
   @override
