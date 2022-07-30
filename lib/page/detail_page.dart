@@ -52,56 +52,88 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            'Character: ${widget.characterName}',
-            style: const TextStyle(fontSize: 17),
+        appBar: characterComicsAppBar(),
+        body: charactersComic.isEmpty ? characterComicsIsEmptyWidget() : characterComicsList());
+  }
+
+  AppBar characterComicsAppBar() {
+    return AppBar(
+      centerTitle: true,
+      title: Text(
+        'Character: ${widget.characterName}',
+        style: const TextStyle(fontSize: 17),
+      ),
+      backgroundColor: Colors.red,
+    );
+  }
+
+  Center characterComicsIsEmptyWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SpinKitWave(
+            size: 60.0,
+            color: Colors.red,
           ),
-          backgroundColor: Colors.red,
-        ),
-        body: charactersComic.isEmpty
-            ? const SpinKitWave(
-                color: Colors.red,
-              )
-            : ListView.builder(
-                itemCount: charactersComic.length,
-                itemBuilder: (BuildContext contex, int index) {
-                  log('${charactersComic.length}');
-                  log('KARAKTERİN ÇİZGİ ROMANLARI ${charactersComic[index].title}');
-                  return Card(
-                    color: Colors.blue,
-                    shadowColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    elevation: 30,
-                    child: Column(children: [
-                      Text(
-                        charactersComic[index].title!,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Image.network(
-                        '${charactersComic[index].thumbnail!.path}.${charactersComic[index].thumbnail!.extension}',
-                        fit: BoxFit.fill,
-                        width: 200,
-                        height: 200,
-                      ),
-                      Text(
-                        charactersComic[index].description ?? 'Not Description',
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ]),
-                  );
-                }));
+          if (_isLoading)
+            const Text(
+              'No comics found turn back please.',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+        ],
+      ),
+    );
+  }
+
+  ListView characterComicsList() {
+    return ListView.builder(
+        itemCount: charactersComic.length,
+        itemBuilder: (BuildContext contex, int index) {
+          log('LENGTH ${charactersComic.length}');
+          log('KARAKTERİN ÇİZGİ ROMANLARI ${charactersComic[index].title}');
+          return Card(
+            color: Colors.blue,
+            shadowColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            elevation: 30,
+            child: Column(children: [
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                charactersComic[index].title!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Image.network(
+                '${charactersComic[index].thumbnail!.path}.${charactersComic[index].thumbnail!.extension}',
+                fit: BoxFit.fill,
+                width: 200,
+                height: 200,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                charactersComic[index].description ?? 'Not Description',
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ]),
+          );
+        });
   }
 }

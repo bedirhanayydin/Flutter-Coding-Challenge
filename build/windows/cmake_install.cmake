@@ -42,11 +42,6 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/runner/cmake_install.cmake")
 endif()
 
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/plugins/connectivity_plus_windows/cmake_install.cmake")
-endif()
-
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
@@ -146,40 +141,6 @@ file(INSTALL DESTINATION "C:/Users/Lenovo/Documents/Flutter/flutter_coding_chall
         message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
 file(INSTALL DESTINATION "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/runner/Release" TYPE FILE FILES "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/windows/flutter/ephemeral/flutter_windows.dll")
-  endif()
-endif()
-
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
-  if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/runner/Debug/connectivity_plus_windows_plugin.dll")
-    if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
-        message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-    endif()
-    if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
-        message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-    endif()
-file(INSTALL DESTINATION "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/runner/Debug" TYPE FILE FILES "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/plugins/connectivity_plus_windows/Debug/connectivity_plus_windows_plugin.dll")
-  elseif("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
-    list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/runner/Profile/connectivity_plus_windows_plugin.dll")
-    if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
-        message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-    endif()
-    if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
-        message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-    endif()
-file(INSTALL DESTINATION "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/runner/Profile" TYPE FILE FILES "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/plugins/connectivity_plus_windows/Profile/connectivity_plus_windows_plugin.dll")
-  elseif("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/runner/Release/connectivity_plus_windows_plugin.dll")
-    if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
-        message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-    endif()
-    if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
-        message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
-    endif()
-file(INSTALL DESTINATION "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/runner/Release" TYPE FILE FILES "C:/Users/Lenovo/Documents/Flutter/flutter_coding_challenge/build/windows/plugins/connectivity_plus_windows/Release/connectivity_plus_windows_plugin.dll")
   endif()
 endif()
 

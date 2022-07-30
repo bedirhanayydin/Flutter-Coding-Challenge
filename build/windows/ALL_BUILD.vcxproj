@@ -137,10 +137,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\Lenovo\Documents\Flutter\flutter_coding_challenge\build\windows\plugins\connectivity_plus_windows\connectivity_plus_windows_plugin.vcxproj">
-      <Project>{3030DE5B-A066-334D-B537-EAB9698B4D78}</Project>
-      <Name>connectivity_plus_windows_plugin</Name>
-    </ProjectReference>
     <ProjectReference Include="C:\Users\Lenovo\Documents\Flutter\flutter_coding_challenge\build\windows\runner\flutter_coding_challenge.vcxproj">
       <Project>{46B9304D-D613-3CC1-8A12-E47FB67FAF27}</Project>
       <Name>flutter_coding_challenge</Name>

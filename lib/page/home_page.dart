@@ -41,9 +41,7 @@ class _HomePageState extends State<HomePage> {
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
     fetchPostItemsAdvance();
-    if (mounted) {
-      setState(() {});
-    }
+
     controller.loadComplete();
   }
 
@@ -126,7 +124,7 @@ class _HomePageState extends State<HomePage> {
         ),
         itemCount: characters.length,
         itemBuilder: ((context, index) {
-          log('${characters.length}');
+          log('${characters.isEmpty}');
           return _PostCard(
             model: characters[index],
           );
@@ -187,7 +185,7 @@ class _PostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print(_model!.id);
+        log('${_model!.id}');
         Navigator.push(
           context,
           MaterialPageRoute(
