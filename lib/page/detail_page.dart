@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../model/marvelComic.dart';
@@ -22,15 +21,12 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
+    _changeLoading();
+    log('CHARACTER ID ${widget.characterComicId}');
+    _projectDetailService = ProjectNetworkManager();
+    fetchItemsWithId(widget.characterComicId ?? 0);
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _changeLoading();
-      log('CHARACTER ID ${widget.characterComicId}');
-      _projectDetailService = ProjectNetworkManager();
-      fetchItemsWithId(widget.characterComicId ?? 0);
-
-      setState(() {});
-    });
+    setState(() {});
   }
 
   void _changeLoading() {
@@ -81,10 +77,13 @@ class _DetailPageState extends State<DetailPage> {
             size: 60.0,
             color: Colors.red,
           ),
+          const SizedBox(
+            height: 25,
+          ),
           if (_isLoading)
             const Text(
-              'No comics found turn back please.',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              'No comics found after 2015. Turn back please.',
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
         ],
       ),
