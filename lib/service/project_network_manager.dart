@@ -4,10 +4,10 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_coding_challenge/constants/app_constants.dart';
-import 'package:flutter_coding_challenge/model/marvelComic.dart';
+import 'package:flutter_coding_challenge/model/marvelComic_model.dart';
 import 'package:intl/intl.dart';
 
-import '../model/characters.dart';
+import '../model/characters_model.dart';
 
 abstract class IProjectNetworkManager {
   final Dio dio;
